@@ -1,0 +1,60 @@
+// Trivia Game Implementation
+
+// Sample questions array
+const questions = [
+    { question: "What is the capital of France?", answer: "Paris" },
+    { question: "What is 2 + 2?", answer: "4" },
+    { question: "What is the largest planet in our solar system?", answer: "Jupiter" }
+];
+
+// Variables to track score and timer
+let score = 0;
+let currentQuestionIndex = 0;
+let timer;
+
+// Function to start the game
+function startGame() {
+    score = 0;
+    currentQuestionIndex = 0;
+    console.log("Game started! You have 15 seconds to answer each question.");
+    askQuestion();
+}
+
+// Function to ask a question
+function askQuestion() {
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        console.log(currentQuestion.question);
+        startTimer();
+    } else {
+        endGame();
+    }
+}
+
+// Function to start the timer
+function startTimer() {
+    let timeLeft = 15;
+    timer = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            console.log("Time's up!");
+            currentQuestionIndex++;
+            askQuestion();
+        } else {
+            console.log(`Time left: ${timeLeft} seconds`);
+            timeLeft--;
+        }
+    }, 1000);
+}
+
+// Function to validate the answer
+function validateAnswer(userAnswer) {
+    clearInterval(timer);
+    const currentQuestion = questions[currentQuestionIndex];
+    if (userAnswer.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+        console.log("Correct!");
+        score++;
+    } else {
+        console.log(`Incorrect! The correct answer was ${currentQuestion.answer}.`);
+    }
+    currentQuestion
